@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
 	ball.setFillColor(d_ball.color);
 	ball.setPosition(d_ball.spawnPositionX, d_ball.spawnPositionY);
 
-	bool isSpacebarPressed = false;
+	bool isGameRunning = false;
 
 	sf::Clock clock;
 
@@ -83,43 +83,58 @@ int main(int argc, char** argv) {
 		while (window.pollEvent(sfEvent)) {
 			if (sfEvent.type == sf::Event::Closed) {
 				window.close();
+
 				Console::Text<std::string> closeInfoText("Window closed!");
+				closeInfoText.printText();
 			}
-			else if (sfEvent.type == sf::Event::KeyPressed) {
-				if (sfEvent.key.code == sf::Keyboard::Space) {
-					isSpacebarPressed = true;
-				}
-			}
-			else if (sfEvent.type == sf::Event::KeyReleased) {
-				if (sfEvent.key.code == sf::Keyboard::Space) {
-					isSpacebarPressed = false;
-				}
+
+			// Check for Spacebar Key Press
+			if (sfEvent.type == sf::Event::KeyPressed && sfEvent.key.code == sf::Keyboard::Space) {
+				isGameRunning = true;
 			}
 		}
 
-		float deltaTime = clock.restart().asSeconds();			// Get delta time for uniforming FPS
+		while (isGameRunning) {
+			// Exit the game
+			while (window.pollEvent(sfEvent)) {
+				if (sfEvent.type == sf::Event::Closed) {
+					window.close();
 
-		// Keyboard Events
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && board1.getPosition().y >= 2) {board1.move(0, -d_board1.speed * deltaTime);}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && board1.getPosition().y + d_board1.height <= (window.getSize().y - 5)) {board1.move(0, d_board1.speed * deltaTime);}
+					Console::Text<std::string> closeInfoText("Window closed!");
+					closeInfoText.printText();
+				}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && board2.getPosition().y >= 2) {board2.move(0, -d_board2.speed * deltaTime);}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && board2.getPosition().y + d_board2.height <= (window.getSize().y - 5)) {board2.move(0, d_board2.speed * deltaTime);}
+				// Check for Escape key press
+				if (sfEvent.type == sf::Event::KeyPressed && sfEvent.key.code == sf::Keyboard::Escape) {
+					window.close();
 
-		// Play with the ball
-		
-		if (isSpacebarPressed) {
-			std::cout << std::endl << "Spacebar was clicked!" << std::endl;
+					Console::Text<std::string> closeInfoText("Window closed!");
+					closeInfoText.printText();
+				}
+			}
+
+			float deltaTime = clock.restart().asSeconds();			// Get delta time for uniforming FPS
+
+			// Keyboard Events
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && board1.getPosition().y >= 2) { board1.move(0, -d_board1.speed * deltaTime); }
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && board1.getPosition().y + d_board1.height <= (window.getSize().y - 5)) { board1.move(0, d_board1.speed * deltaTime); }
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && board2.getPosition().y >= 2) { board2.move(0, -d_board2.speed * deltaTime); }
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && board2.getPosition().y + d_board2.height <= (window.getSize().y - 5)) { board2.move(0, d_board2.speed * deltaTime); }
+
+			// Play with the ball
+
+
+
+			window.clear();
+
+			// Draw objects
+			window.draw(board1);
+			window.draw(board2);
+			window.draw(ball);                 // This comment needs to be shown
+
+			window.display();
 		}
-
-		window.clear();
-
-		// Draw objects
-		window.draw(board1);
-		window.draw(board2);
-		window.draw(ball);                 // This comment needs to be shown
-
-		window.display();
 	}
 
 	return 0;
