@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
 		// Draw objects
 		window.draw(board1);
 		window.draw(board2);
-		window.draw(ball);                 
+		window.draw(ball);                 // This comment needs to be shown
 
 		window.display();
 	}
