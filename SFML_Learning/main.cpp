@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
 		// Draw objects
 		window.draw(board1);
 		window.draw(board2);
-		window.draw(ball);                  // This comment should appear nicely
+		window.draw(ball);                  // This comment should appear nicely in gitHub
 
 		window.display();
 	}
