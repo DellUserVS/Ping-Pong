@@ -123,15 +123,19 @@ int main(int argc, char** argv) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && board2.getPosition().y + d_board2.height <= (window.getSize().y - 5)) { board2.move(0, d_board2.speed * deltaTime); }
 
 			// Play with the ball
-
-
+			if (randNum == 1) {
+				ball.move(-d_ball.speed * deltaTime, 0);
+			}
+			else if (randNum == 2) {
+				ball.move(d_ball.speed * deltaTime, 0);
+			}
 
 			window.clear();
 
 			// Draw objects
 			window.draw(board1);
 			window.draw(board2);
-			window.draw(ball);                 // This comment needs to be shown
+			window.draw(ball);             
 
 			window.display();
 		}
