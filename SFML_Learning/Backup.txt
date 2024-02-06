@@ -1,0 +1,23 @@
+case sf::Event::Resized:
+				unsigned int newWidth = window.getSize().x;
+				unsigned int newHeight = window.getSize().y;
+
+				Console::Text<std::string> updateText("\n\nWindow Size Update Detected!\n");
+
+				Console::Text<std::string> widthText("window-size: w{");
+				Console::Text<int> widthIntText(newWidth);
+
+				Console::Text<std::string> heightText("}, h{");
+				Console::Text<int> heightIntText(newHeight);
+
+				Console::Text<std::string> endText("}\n");
+
+				updateText.printText();
+
+				widthText.printText();
+				widthIntText.printText();
+
+				heightText.printText();
+				heightIntText.printText();
+
+				endText.printText();
